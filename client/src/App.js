@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
-function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/message")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => console.error("Fetch hatası:", err));
-  }, []);
+export default function App() {
+  const [user, setUser] = useState(null);
 
   return (
-    <div>
-      <h1>Client - React</h1>
-      <p>Sunucudan gelen mesaj: {message}</p>
+    <div style={{ padding: 20 }}>
+      {user ? (
+        <h2>Hoşgeldin, {user.username}!</h2>
+      ) : (
+        <>
+          <Login onLogin={setUser} />
+          <hr />
+          <Register />
+        </>
+      )}
     </div>
   );
 }
-
-export default App;
